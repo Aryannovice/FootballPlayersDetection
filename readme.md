@@ -4,7 +4,19 @@ Multi-view player tracking system with two approaches: basic histogram matching 
 
 
 File structure
-```bash . ├── Approach1/ │   ├── brute_force.py         # Basic two-view matching │   ├── brute_force_reid.py    # Basic single-view tracking │   └── utils.py               # Detection utilities ├── Approach2/ │   ├── homography_matching.py # Advanced two-view tracking │   ├── bytetrack_reid.py      # Advanced single-view with homography │   └── utils.py               # Enhanced detection utilities ├── model/ │   └── best.pt                # YOLO model weights └── videos/                    # Input videos directory ```
+```$ tree -L 2
+.
+├── Approach1
+│   ├── brute_force.py         # Basic two-view matching
+│   ├── brute_force_reid.py    # Basic single-view tracking
+│   └── utils.py               # Detection utilities
+├── Approach2
+│   ├── homography_matching.py # Advanced two-view tracking
+│   ├── bytetrack_reid.py      # Advanced single-view with homography
+│   └── utils.py               # Enhanced detection utilities
+├── model
+│   └── best.pt                # YOLO model weights
+└── videos                     # Input videos directory ```
 
 
 
