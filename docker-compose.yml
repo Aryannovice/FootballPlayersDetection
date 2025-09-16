@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  player-tracking:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./videos:/app/videos:ro
+      - ./model:/app/model:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
