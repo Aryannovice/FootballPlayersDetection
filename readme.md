@@ -74,3 +74,136 @@ File structure
 ## Performance Notes
 - Approach 1: ~30-40% accuracy, basic color matching
 - Approach 2: ~70% accuracy, robust to occlusions and view changes
+
+- # Player Tracking Service Dockerization update version 2(lets say)cuz its cool.
+
+A containerized player tracking service with multiple approaches for video analysis. **Fully containerized with Docker and verified working.**
+
+## Docker Setup
+
+### Prerequisites
+- Docker and Docker Compose installed
+- Approximately 2GB free disk space for the Docker image
+
+### Quick Start
+
+```bash
+# Build and run the service
+docker-compose up -d
+
+# Verify it's working
+curl http://localhost:8080/health
+
+# Stop the service
+docker-compose down
+```
+
+### Detailed Setup
+
+1. **Build the Docker image:**
+   ```bash
+   docker build -t player-tracking .
+   ```
+
+2. **Run with Docker Compose (Recommended):**
+   ```bash
+   docker-compose up -d
+   ```
+
+3. **Or run directly with Docker:**
+   ```bash
+   docker run -p 8080:8080 -v $(pwd)/videos:/app/videos:ro -v $(pwd)/model:/app/model:ro player-tracking
+   ```
+
+### Health Check & Verification
+
+Once the container is running, verify the service is available:
+
+```bash
+# Check health endpoint
+curl http://localhost:8080/health
+
+# Check service info
+curl http://localhost:8080/
+```
+
+** Verified Health Response:**
+```json
+{
+  "status": "healthy",
+  "service": "player-tracking", 
+  "version": "1.0.0",
+  "approaches": ["brute_force", "bytetrack_reid", "homography_matching"]
+}
+```
+
+** Verified Service Info Response:**
+```json
+{
+  "message": "Player Tracking Service",
+  "endpoints": ["/health"],
+  "approaches": {
+    "approach1": "brute_force and brute_force_reid",
+    "approach2": "bytetrack_reid and homography_matching"
+  }
+}
+```
+
+### Container Management
+
+```bash
+# Start the service
+docker-compose up -d
+
+# Check container status
+docker-compose ps
+
+# View logs
+docker-compose logs
+
+# Stop the service
+docker-compose down
+
+# Remove everything (including images)
+docker-compose down --rmi all -v
+```
+
+
+
+
+
+### Running Player Tracking Algorithms
+
+To use the tracking algorithms, execute them inside the running container:
+
+```bash
+# Get container ID
+docker ps
+
+# Access the running container
+docker exec -it <container_id> bash
+
+# Run specific approaches
+python Approach1/brute_force.py --broadcast_path videos/broadcast.mp4 --tacticam_path videos/tacticam.mp4
+python Approach1/brute_force_reid.py --video_path videos/15sec_input_720p.mp4
+python Approach2/bytetrack_reid.py --video videos/15sec_input_720p.mp4
+python Approach2/homography_matching.py --broadcast videos/broadcast.mp4 --tacticam videos/tacticam.mp4
+```
+
+## Docker Configuration
+
+### Files Created
+- `Dockerfile` - Multi-stage build with Python 3.9 and OpenCV dependencies
+- `docker-compose.yml` - Service orchestration with health checks
+- `.dockerignore` - Optimized build context
+- `health_server.py` - Automatically generated Flask health endpoint
+
+### Container Features
+- **Base Image**: Python 3.9-slim
+- **Exposed Port**: 8080
+- **Health Checks**: Automatic container health monitoring
+- **Volume Mounts**: Read-only access to videos and model directories
+- **Dependencies**: All required packages for player tracking (ultralytics, opencv-python, numpy, tqdm, flask)
+
+
+
