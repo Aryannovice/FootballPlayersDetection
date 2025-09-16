@@ -206,7 +206,8 @@ python Approach2/homography_matching.py --broadcast videos/broadcast.mp4 --tacti
 - **Dependencies**: All required packages for player tracking (ultralytics, opencv-python, numpy, tqdm, flask)
 
 
-**In case you wish to run it locally , you will need model.pt (yolo v11) fine tuned as well as the videos, for further assistance just drop an email at ayushpandey1177@gmail.com or for videos and models**
+**In case you wish to run it locally , you will need model.pt (yolo v11) fine tuned as well as the videos, for further assistance just drop an email at ayushpandey1177@gmail.com for videos and models**
+
 
 
 
